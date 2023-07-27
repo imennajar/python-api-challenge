@@ -36,7 +36,7 @@ In this project, we will see in the first part what the weather is like as we ap
 
 - Compute Linear Regression Plots
 
-- Create maps
+- Create Maps
 
 ## Program:
 
