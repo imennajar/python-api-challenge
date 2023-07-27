@@ -2,7 +2,7 @@
 
 In the previous project, we learned how to use matplotlib to include a statistics summary and to draw charts and plots for better reading and analysis📊. 
 Now, we will see how to use IPAs to get a dynamic dataset and use our skills to analyze our data.
-In this project, we will see  in a first part what is the weather like as we approach the equator, and in a second part how to plan future vacations using weather data skills.
+In this project, we will see in the first part what the weather is like as we approach the equator, and in the second part how to plan future vacations using weather data skills.
 
 
 ## What we will learn from this project:
@@ -15,14 +15,14 @@ In this project, we will see  in a first part what is the weather like as we app
   
 - How to use our skill to create Plots to showcase the relationship between weather variables and Latitude: Latitude vs. Temperature, Latitude vs. Humidity, Latitude vs. Cloudiness, and Latitude vs. Wind Speed.
   
-- How to use our skill to compute Linear Regression for Each Relationship: Latitude vs. Temperature in Northern and Southern Hemisphere, Latitude vs. Humidity in Northern and Southern Hemisphere,
-  Latitude vs. Cloudinessin Northern and Southern Hemisphere, and Latitude vs. Wind Speed in Northern and Southern Hemisphere. We will include the linear regression line, the model's formula, and the rvalues
+- How to use our skills to compute Linear Regression for each relationship: Latitude vs. Temperature in Northern and Southern Hemisphere, Latitude vs. Humidity in Northern and Southern Hemisphere,
+  Latitude vs. Cloudiness in Northern and Southern Hemisphere, and Latitude vs. Wind Speed in Northern and Southern Hemisphere.  We will include the linear regression line, the model's formula, and the rvalues.
   
-- How to create a map that displays a point for every city of our data using a weather caracteristique
+- How to create a map that displays a point for every city of our data using a characteristic of the weather
   
 - How to narrow down our data to find our ideal weather condition
   
-- How to use the Geoapify API to find hotels (or any other accomodation)
+- How to use the Geoapify API to find hotels (or any other location)
   
 - How to add the hotel name and the country as additional information in the hover message for each city in the map
   
@@ -30,7 +30,7 @@ In this project, we will see  in a first part what is the weather like as we app
 
 - Prepare the data
 
-- retrieve weather data
+- Retrieve weather data
 
 - Create Plots
 
@@ -45,7 +45,7 @@ In this project, we will see  in a first part what is the weather like as we app
 - Pandas: it is a Python library for data manipulation and analysis
 
 - Matplotlib.pyplot:  Matplotlib has a module named pyplot which makes things easy for plotting by providing features to control line styles, font properties, formatting axes etc. Matplotlib is a python library used to 
-create 2D graphs and plots by using python scripts.
+create 2D graphs and plots by using Python scripts.
 
 - Scipy.stats: it is a module that contains a large number of probability distributions.
 
@@ -53,11 +53,11 @@ create 2D graphs and plots by using python scripts.
   
 - Numpy: it is a Python library for working with arrays, in domain of linear algebra, fourier transform, and matrices.
   
-- Requests: it is a module allowing to send HTTP requests using Python.
+- Requests: it is a module allowing the sending of HTTP requests using Python.
 
 -  Hvplot: it is a library in Python. It provides a high-level plotting API built on HoloViews that provides a general and consistent API for plotting data.
   
-- OpenWeatherMap: it is an online service provides global weather data via API.
+- OpenWeatherMap: it is an online service that provides global weather data via API.
   
 - Citipy
 
@@ -305,7 +305,7 @@ map2
 
 ## Tip:🪄
 
-For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemispher, the  a point for every city in our data. The size of the point will be representing differnet weather variables in which map.
+For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemisphere, a point for each city in our data. The size of the point will represent weather variables in each map.
 
 <img src='lat.temp.png' style ='width:700px;height:300px'/>
 
