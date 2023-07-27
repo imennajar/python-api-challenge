@@ -308,10 +308,11 @@ map2
 
 For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemispher, the  a point for every city in our data. The size of the point will be representing differnet weather variables in which map.
 
-<img src='lin1.png' style ='width:700px;height:300px'/>
+<img src='lat.temp.png' style ='width:700px;height:300px'/>
 
-<img src='lin3.png' style ='width:700px;height:300px'/> 
+<img src='lat.hum.png' style ='width:700px;height:300px'/> 
 
-For a good comparison between Capomulin and Ramicane, generate a line plot of tumor volume vs. time point for two mice treated wuth the two different drug regimens
-<img src='lin2.png' style ='width:700px;height:300px'/> 
+<img src='lat.cl.png' style ='width:700px;height:300px'/>
+
+<img src='lat.wind.png' style ='width:700px;height:300px'/>
 
