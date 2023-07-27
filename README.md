@@ -166,7 +166,7 @@ print("-----------------------------")
 
 ```
 
-#### Create the Scatter Plots: Latitude vs. Temperature
+#### Create the Scatter Plots: Example, Latitude vs. Temperature
 ```
 # Build scatter plot for latitude vs. temperature
 lat=city_data_df['Lat']
@@ -182,23 +182,32 @@ plt.savefig("output_data/Fig1.png")
 # Show plot
 plt.show()
 ```
-#### 
+#### Define a function to create Linear Regression plots
+```
+def regress_value(x_values, y_values,title,coordinats):
+    r = scipy.stats.pearsonr(x_values, y_values)
+    print(f"The r-value is: {r[0]}")
+    (slope, intercept, rvalue, pvalue, stderr) = linregress(x_values, y_values)
+    regress_values= x_values*slope+intercept
+    line_eq='y='+str(round(slope,2))+'x+'+ str(round(intercept,2))
+    plt.plot(x_values,regress_values,'green')
+    plt.annotate(line_eq, coordinats,fontsize=15,color='red')
+    plt.scatter(x_values, y_values, marker='o', facecolors='blue', edgecolors='gray',alpha=0.75)
+    plt.ylabel(title)
+    plt.xlabel('Latitude')
+```
 
-#### Compute Linear Regression for Each Relationship: Temperature vs. Latitude Linear Regression Plot on Northern Hemisphere
+#### Compute Linear Regression for Each Relationship: Example, Temperature vs. Latitude Linear Regression Plot on Northern Hemisphere
 ```
-# Line plot of tumor volume vs. time point for a single mouse treated with Capomulin
-capomulin_table = study_result_complete.loc[study_result_complete['Drug Regimen'] == 'Capomulin']
-mousedata = capomulin_table.loc[capomulin_table['Mouse ID']== 'l509']
-x_axix =mousedata['Timepoint']
-y_axis = mousedata['Tumor Volume (mm3)']
-plt.plot(mousedata['Timepoint'],mousedata['Tumor Volume (mm3)'],color='r', label='', marker = 'o')
-plt.xlabel('Timepoint (days)')
-plt.ylabel('Tumor Volume (mm3)')
-plt.legend('Mouse l509',loc='lower right')
-plt.title( 'Capomulin treatment of mouse l509')
-plt.show()
+# Create a DataFrame with the Southern Hemisphere data (Latitude < 0)
+southern_hemi_df = city_data_df.loc[city_data_df['Lat']<0]
+# Display sample data
+southern_hemi_df.head()
+
 ```
-<img src='lin1.png' style ='width:700px;height:300px'/>
+### Results of the Scatter Plots
+
+
 
 #### Scatter Plots
 
