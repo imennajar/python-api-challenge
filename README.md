@@ -55,11 +55,11 @@ create 2D graphs and plots by using Python scripts.
   
 - Requests: it is a module allowing the sending of HTTP requests using Python.
 
--  Hvplot: it is a library in Python. It provides a high-level plotting API built on HoloViews that provides a general and consistent API for plotting data.
+-  Hvplot: it provides a high-level plotting API built on HoloViews that provides a general and consistent API for plotting data.
   
 - OpenWeatherMap: it is an online service that provides global weather data via API.
   
-- Citipy
+- Citipy: it is a Python library.
 
 ### Code 
 #### Generate the Cities List by Using the citipy Library
