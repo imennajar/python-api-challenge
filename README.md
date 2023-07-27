@@ -92,7 +92,7 @@ print(f"Number of cities in the list: {len(cities)}")
 plt.legend('Mouse ID', loc='upper right', frameon=True)
 
 
-#### Use the OpenWeatherMap API to retrieve weather data from the cities list generated in the started code
+#### Use the OpenWeatherMap API to retrieve weather data from the cities list
 ```
 # Set the API base URL
 
