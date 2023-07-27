@@ -299,7 +299,6 @@ map2 = hotel_df.hvplot.points(
                                  scale = 1,
                                  hover_cols = ["Hotel Name", "Country"]
                                   )
-
 # Display the map
 map2
 ```
