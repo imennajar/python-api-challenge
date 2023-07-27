@@ -90,7 +90,7 @@ for lat_lng in lat_lngs:
 print(f"Number of cities in the list: {len(cities)}")
 ```
 plt.legend('Mouse ID', loc='upper right', frameon=True)
-<img src='bar.png' style ='width:700px;height:300px'/>
+
 
 #### Use the OpenWeatherMap API to retrieve weather data from the cities list generated in the started code
 ```
