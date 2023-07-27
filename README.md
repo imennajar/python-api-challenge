@@ -44,7 +44,8 @@ In this project, we will see  in a first part what is the weather like as we app
 
 - Pandas: it is a Python library for data manipulation and analysis
 
-- Matplotlib.pyplot:  Matplotlib has a module named pyplot which makes things easy for plotting by providing features to control line styles, font properties, formatting axes etc. Matplotlib is a python library used to create 2D graphs and plots by using python scripts.
+- Matplotlib.pyplot:  Matplotlib has a module named pyplot which makes things easy for plotting by providing features to control line styles, font properties, formatting axes etc. Matplotlib is a python library used to 
+create 2D graphs and plots by using python scripts.
 
 - Scipy.stats: it is a module that contains a large number of probability distributions.
 
@@ -305,7 +306,7 @@ map2
 
 ## Tip:🪄
 
-For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemispher, the  a point for every city in our data. The size of the point will be representing differnet weather variables in wich map
+For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemispher, the  a point for every city in our data. The size of the point will be representing differnet weather variables in which map.
 
 <img src='lin1.png' style ='width:700px;height:300px'/>
 
