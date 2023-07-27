@@ -208,10 +208,10 @@ southern_hemi_df.head()
 ```
 ### Results of the Scatter Plots
 
-<img src='output_data/Fig1.png' style ='width:700px;height:300px'/> 
-<img src='output_data/Fig2.png' style ='width:700px;height:300px'/> 
-<img src='output_data/Fig3.png' style ='width:700px;height:300px'/> 
-<img src='output_data/Fig4.png' style ='width:700px;height:300px'/> 
+<img src='WeatherPy/output_data/Fig1.png' style ='width:700px;height:300px'/> 
+<img src='WeatherPy/output_data/Fig2.png' style ='width:700px;height:300px'/> 
+<img src='WeatherPy/output_data/Fig3.png' style ='width:700px;height:300px'/> 
+<img src='WeatherPy/output_data/Fig4.png' style ='width:700px;height:300px'/> 
 
 #### Create a map that displays a point for every city from our data. The size of the point should be the humidity in each city
 
