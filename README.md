@@ -13,7 +13,7 @@ In this project, we will see  in a first part what is the weather like as we app
   
 - How Use the OpenWeatherMap API to retrieve weather data from the cities list generated in the started code
   
-- How to use our skill to create Plots to Showcase the Relationship Between Weather Variables and Latitude: Latitude vs. Temperature, Latitude vs. Humidity, Latitude vs. Cloudiness, and Latitude vs. Wind Speed.
+- How to use our skill to create Plots to showcase the relationship between weather variables and Latitude: Latitude vs. Temperature, Latitude vs. Humidity, Latitude vs. Cloudiness, and Latitude vs. Wind Speed.
   
 - How to use our skill to compute Linear Regression for Each Relationship: Latitude vs. Temperature in Northern and Southern Hemisphere, Latitude vs. Humidity in Northern and Southern Hemisphere,
   Latitude vs. Cloudinessin Northern and Southern Hemisphere, and Latitude vs. Wind Speed in Northern and Southern Hemisphere. We will include the linear regression line, the model's formula, and the rvalues
@@ -28,15 +28,15 @@ In this project, we will see  in a first part what is the weather like as we app
   
 ## Instructions:
 
-Prepare the data
+- Prepare the data
 
-retrieve weather data
+- retrieve weather data
 
-Create Plots
+- Create Plots
 
-Compute Linear Regression Plots
+- Compute Linear Regression Plots
 
-Create a maps
+- Create maps
 
 ## Program:
 
@@ -50,11 +50,11 @@ Create a maps
 
 - Jupyter Notebook: it is a web-based interactive computing platform that allows the user to compile all aspects of a data project.
   
-  - Numpy: it is a Python library for working with arrays, in domain of linear algebra, fourier transform, and matrices.
+- Numpy: it is a Python library for working with arrays, in domain of linear algebra, fourier transform, and matrices.
   
 - Requests: it is a module allowing to send HTTP requests using Python.
 
--  Hvplot: provides : it is a library in Python. It provides a high-level plotting API built on HoloViews that provides a general and consistent API for plotting data.
+-  Hvplot: it is a library in Python. It provides a high-level plotting API built on HoloViews that provides a general and consistent API for plotting data.
   
 - OpenWeatherMap: it is an online service provides global weather data via API.
   
@@ -207,37 +207,105 @@ southern_hemi_df.head()
 ```
 ### Results of the Scatter Plots
 
+<img src='output_data/Fig1.png' style ='width:700px;height:300px'/> 
+<img src='output_data/Fig2.png' style ='width:700px;height:300px'/> 
+<img src='output_data/Fig3.png' style ='width:700px;height:300px'/> 
+<img src='output_data/Fig4.png' style ='width:700px;height:300px'/> 
 
-
-#### Scatter Plots
+#### Create a map that displays a point for every city from our data. The size of the point should be the humidity in each city
 
 ```
-# Scatter plot of mouse weight vs. the average observed tumor volume for the entire Capomulin regimen
-
-capomulin_table = study_result_complete.loc[study_result_complete['Drug Regimen'] == "Capomulin"]
-
-
-mice_group =capomulin_table.groupby(['Mouse ID']).mean()
-
-av_tum =mice_group ['Tumor Volume (mm3)']
-
-mouse_weight = mice_group['Weight (g)']
-
- #Create scatte rplot 
-plt.scatter(mouse_weight, av_tum, marker='o', facecolors='blue', edgecolors='red',
-              s=av_tum, alpha=0.75)
-#title and labels
-plt.title( 'mouse weight vs. average tumor volume: Capomulin regimen \n')
-plt.xlabel('Weight (g)')
-plt.ylabel(' Average Tumor volume (mm3)')
-plt.savefig('scatter.png')
+%%capture --no-display
+# Configure the map plot
+map1 = city_data_df.hvplot.points(
+    "Lng",
+    "Lat",
+    geo = True,
+    tiles = "OSM",
+    frame_width = 700,
+    frame_height = 500,
+    size = "Humidity",
+    scale = 1,
+    color = "City"
+)
+# Display the map
+map1
 ```
-<img src='sca1.png' style ='width:700px;height:300px'/> 
-<img src='sca2.png' style ='width:700px;height:300px'/>
+#### Use the Geoapify API to find the first hotel located within 10,000 metres
+
+```
+# Set parameters to search for a hotel
+
+radius = 10000   
+params = {
+    "apiKey":geoapify_key,
+    "categories": "accommodation.hotel",
+    "format":"json",
+    "limit" : 1
+}
+
+# Print a message to follow up the hotel search
+print("Starting hotel search")
+
+# Iterate through the hotel_df DataFrame
+for index, row in hotel_df.iterrows():
+    # get latitude, longitude from the DataFrame
+    latitude = row['Lat']
+    longitude = row["Lng"]
+    
+    # Add filter and bias parameters with the current city's latitude and longitude to the params dictionary
+    params["filter"] =f"circle:{longitude},{latitude},{radius}"
+    params["bias"] = f"proximity:{longitude},{latitude}"
+    
+    # Set base URL
+    base_url = "https://api.geoapify.com/v2/places"
+
+
+    # Make an API request using the params dictionaty
+    name_address = requests.get(base_url, params=params) 
+    
+    # Convert the API response to JSON format
+    name_address = name_address.json()
+    
+    # Grab the first hotel from the results and store the name in the hotel_df DataFrame
+    try:
+        hotel_df.loc[index, "Hotel Name"] = name_address["features"][0]["properties"]["name"]
+    except (KeyError, IndexError):
+        # If no hotel is found, set the hotel name as "No hotel found".
+        hotel_df.loc[index, "Hotel Name"] = "No hotel found"
+        
+    # Log the search results
+    print(f"{hotel_df.loc[index, 'City']} - nearest hotel: {hotel_df.loc[index, 'Hotel Name']}")
+
+# Display sample data
+hotel_df.head()
+
+```
+#### Add the hotel name and the country as additional information in the hover message for each city in the map
+
+```
+%%capture --no-display
+# Configure the map plot
+map2 = hotel_df.hvplot.points(
+                                "Lng", 
+                                "Lat", 
+                                 geo = True,
+                                 color = "City",
+                                 alpha =1,
+                                 tiles = "OSM",
+                                 frame_width = 700,
+                                 frame_height = 500,
+                                 scale = 1,
+                                 hover_cols = ["Hotel Name", "Country"]
+                                  )
+
+# Display the map
+map2
+```
 
 ## Tip:🪄
 
-For a better analysis of the Capomulin results, generate lines plot of tumor volume vs. time point for more than one mouse treated.
+For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemispher, the  a point for every city in our data. The size of the point will be representing differnet weather variables in wich map
 
 <img src='lin1.png' style ='width:700px;height:300px'/>
 
