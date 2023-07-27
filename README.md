@@ -60,67 +60,131 @@ Create a maps
   
 - Citipy
 
-### Code to generate charts using pyplot methods
-#### Bar Charts
+### Code 
+#### Generate the Cities List by Using the citipy Library
 ```
-# Generate a bar plot showing the total number of rows (Mouse ID/Timepoints) for each drug regimen using pyplot.
+# Empty list for holding the latitude and longitude combinations
+lat_lngs = []
 
-# prepare x axis and y_axis
-x_axis = np.arange(len(mice_per_regimen ))
-y_axis = mice_per_regimen['Mouse ID'] 
-l=mice_per_regimen['Mouse ID'].max()
-# create ticks 
-x= mice_per_regimen.index.values
-tick_location = [value for value in x_axis]
-plt.xticks(tick_location, x,rotation="vertical") 
-# creatte the plot
-plt.bar(x_axis,y_axis, color='r', alpha=0.5,align = 'center')
-# Set x and y limits
-plt.xlim(-1, len(x_axis))
-plt.ylim(0,l+10)
-#Title 
-plt.title("Total Measurements per Drug Regimen \n")
-#labels
-plt.xlabel('Drug Regimen \n')
-plt.ylabel('#of Observed Mouse Timepoints \n')
+# Empty list for holding the cities names
+cities = []
+
+# Range of latitudes and longitudes
+lat_range = (-90, 90)
+lng_range = (-180, 180)
+
+# Create a set of random lat and lng combinations
+lats = np.random.uniform(lat_range[0], lat_range[1], size=1500)
+lngs = np.random.uniform(lng_range[0], lng_range[1], size=1500)
+lat_lngs = zip(lats, lngs)
+
+# Identify nearest city for each lat, lng combination
+for lat_lng in lat_lngs:
+    city = citipy.nearest_city(lat_lng[0], lat_lng[1]).city_name
+    # If the city is unique, then add it to a our cities list
+    if city not in cities:
+        cities.append(city)
+
+# Print the city count to confirm sufficient count
+print(f"Number of cities in the list: {len(cities)}")
 ```
 plt.legend('Mouse ID', loc='upper right', frameon=True)
 <img src='bar.png' style ='width:700px;height:300px'/>
 
-#### Pie Chart
+#### Use the OpenWeatherMap API to retrieve weather data from the cities list generated in the started code
 ```
-# Pie plot showing the distribution of female versus male mice using pyplot
-mouse_gender = study_result_complete["Sex"].value_counts()
-explode = (0.1,0)
-colors =["blue", "pink"]
-labels = mouse_gender.index
-#create a pie chart 
-plt.pie(mouse_gender, explode=explode, labels=labels, colors = colors,
-        autopct="%1.1f%%", shadow=True, startangle=90) 
+# Set the API base URL
 
-plt.title("distribution of female versus male mice")
-plt.legend(labels, loc='upper right')
-plt.axis("equal")
-plt.ylabel('Sex')
+api_key = weather_api_key
+
+url  =f'http://api.openweathermap.org/data/2.5/weather?appid={api_key}&units=metric&q='
+
+# Define an empty list to fetch the weather data for each city
+city_data = []
+
+# Print to logger
+print("Beginning Data Retrieval     ")
+print("-----------------------------")
+
+# Create counters
+record_count = 1
+set_count = 1
+
+# Loop through all the cities in our list to fetch weather data
+for i, city in enumerate(cities):
+        
+    # Group cities in sets of 50 for logging purposes
+    if (i % 50 == 0 and i >= 50):
+        set_count += 1
+        record_count = 0
+    # Create endpoint URL with each city
+    city_url = url+city
+
+   
+    # Log the url, record, and set numbers
+    print("Processing Record %s of Set %s | %s" % (record_count, set_count, city))
+
+    # Add 1 to the record count
+    record_count += 1
+
+    # Run an API request for each of the cities
+    try:
+        # Parse the JSON and retrieve data
+        city_weather= requests.get(city_url).json()
+
+        # Parse out latitude, longitude, max temp, humidity, cloudiness, wind speed, country, and date
+
+        city_lat = city_weather['coord']['lat']
+        city_lng = city_weather['coord']['lon']
+        city_max_temp = city_weather['main']['temp_max']
+        city_humidity = city_weather['main']['humidity']
+        city_clouds = city_weather['clouds']['all']
+        city_wind =city_weather['wind']['speed']
+        city_country = city_weather['sys']['country']
+        city_date =city_weather['dt']
+
+        # Append the City information into city_data list
+        city_data.append({"City": city, 
+                          "Lat": city_lat, 
+                          "Lng": city_lng, 
+                          "Max Temp": city_max_temp,
+                          "Humidity": city_humidity,
+                          "Cloudiness": city_clouds,
+                          "Wind Speed": city_wind,
+                          "Country": city_country,
+                          "Date": city_date})
+
+    # If an error is experienced, skip the city
+    except:
+        print("City not found. Skipping...")
+        pass
+              
+# Indicate that Data Loading is complete 
+print("-----------------------------")
+print("Data Retrieval Complete      ")
+print("-----------------------------")
+
 ```
 
-
-<img src='pie.png' style ='width:700px;height:300px'/> 
-
-#### Boxplots
+#### Create the Scatter Plots: Latitude vs. Temperature
 ```
-# Box plot 
-fig,ax = plt.subplots(figsize =(10, 7))
-prop = dict(markerfacecolor='y', markersize=10,markeredgecolor='r')
-ax.boxplot(tumor_vol_data,labels = treatments,flierprops=prop)
-ax.set_title('Final tumor volume of each mouse across four of the treatment regimens\n')
-ax.set_ylabel('Final Tumor Volume(mm3)\n')
-ax.set_xlabel('\n Drug Regimen')
+# Build scatter plot for latitude vs. temperature
+lat=city_data_df['Lat']
+temp=city_data_df['Max Temp']
+t= date.today()
+plt.scatter(lat, temp, marker='o', facecolors='red', edgecolors='blue',alpha=1)
+# Incorporate the other graph properties
+plt.title( f'City Latitude vs. Max Temperature({t})\n')
+plt.ylabel('Max Temperature (C)')
+plt.xlabel(' Latitude')
+# Save the figure
+plt.savefig("output_data/Fig1.png")
+# Show plot
 plt.show()
 ```
-<img src='box.png' style ='width:700px;height:300px'/>
+#### 
 
-#### Line Plot
+#### Compute Linear Regression for Each Relationship: Temperature vs. Latitude Linear Regression Plot on Northern Hemisphere
 ```
 # Line plot of tumor volume vs. time point for a single mouse treated with Capomulin
 capomulin_table = study_result_complete.loc[study_result_complete['Drug Regimen'] == 'Capomulin']
