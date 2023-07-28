@@ -307,11 +307,11 @@ map2
 
 For a better analysis of the relationship between weather variables and Latitude, we can create maps that display, for example in the Southern Hemisphere, a point for each city in our data. The size of the point will represent weather variables in each map.
 
-<img src='lat.temp.png' style ='width:700px;height:300px'/>
+<img src='WeatherPy/output_data/lat.temp.png' style ='width:700px;height:300px'/>
 
-<img src='lat.hum.png' style ='width:700px;height:300px'/> 
+<img src='WeatherPy/output_data/lat.hum.png' style ='width:700px;height:300px'/> 
 
-<img src='lat.cl.png' style ='width:700px;height:300px'/>
+<img src='WeatherPy/output_data/lat.cl.png' style ='width:700px;height:300px'/>
 
-<img src='lat.wind.png' style ='width:700px;height:300px'/>
+<img src='WeatherPy/output_data/lat.wind.png' style ='width:700px;height:300px'/>
 
